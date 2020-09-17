@@ -1,6 +1,6 @@
 # discordpyturkce
 Bu, Discord API’ını kullanan uygulamalar oluşturmaya yardımcı olacak bir Python kitaplığı olan discord.py’ın Türkçe kılavuzudur.
-
+Orijinal adres: https://discordpy.readthedocs.io/en/latest/
 ## Başlangıç
 
 ### Ön Koşullar
