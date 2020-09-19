@@ -1,3 +1,6 @@
+![discordpytürkçe](https://img.shields.io/github/issues/Berkayerenemin/discordpyturkce)
+![forks](https://img.shields.io/github/forks/Berkayerenemin/discordpyturkce)
+![stars](https://img.shields.io/github/stars/Berkayerenemin/discordpyturkce)
 # discordpyturkce
 Bu, Discord API’ını kullanan uygulamalar oluşturmaya yardımcı olacak bir Python kitaplığı olan discord.py’ın Türkçe kılavuzudur.
 Orijinal adres: https://discordpy.readthedocs.io/en/latest/
@@ -44,7 +47,7 @@ client.run('my token goes here')
 ### Minik Bir Bot
 Belirli bir mesajı yanıtlayan ve size yol gösteren bir bot yapalım.
 
-Şuna benzer:
+Örneğin:
 ```python
 import discord
 
@@ -68,7 +71,7 @@ client.run('token burada yer alır')
 Burada birçok şey oluyor. Bu yüzden size gerçekleşen işlemleri adım adım göstereceğim.
 İlk satır sadece kütüphaneyi içe aktarır. Eğer burada **ModuleNotFoundError** veya **ImportError** hatası ile karşılaşırsanız, bu kütüphaneyi doğru yüklemediğiniz anlamına gelir. Bunun için [**KURULUM**](https://github.com/Berkayerenemin/discordpyturkce#kurulum) kısmına bakın.
 
-* Ardından, bir İstemci (Client) örneği oluşturuyoruz. Bu Client bizim Discord ile bağlantımızı sağlayacaktır.
+* Ardından, bir İstemci (client) örneği oluşturuyoruz. Bu client bizim Discord ile bağlantımızı sağlayacaktır.
 
 * Daha sonra bir olayı kaydetmek için ```Client.event()``` görünümünü kullanırız. Bu kütüphane çok fazla olay (event) içermekte. Aynı zaman bu kütüphane eşzamansız (asynchronous) olduğu için, işleri geri arama (callback) tarzında yapıyoruz. Geri arama, aslına bir şey olduğu zaman çağrılan bir işlevdir. Yazdığımız kodda ```on_ready()``` olayı bot oturum açmayı ve işlerini ayarlamayı bitirdiğinde çağrılır. Bot bir mesaj aldığında ise ```on_message()``` olayı çağrılır.
 
@@ -91,12 +94,30 @@ Artık temel botunuzla oynamayı deneyebilirsiniz.
 
 ## V1.0'a Geçiş
 
+v1.0 tam ve yeniden tasarım yapılması nedeniyle kütüphanedeki en önemli güncellemelerden birisidir. Yapılan değişiklikler o kadar büyük ve uzundur ki tüm niyet ve amaçlar için tamamiyle yeni bir kütüphanedir. Yeniden tasarımın bir kısmı, işleri daha kolay ve doğal hale getirmeyi amaçlar. Herhangi bir işi yapmak için bir istemci (client) gerektirmiyor bunun yerine modeller üzerinde işlem yapılıyor. 
+
 ### Python Sürüm Değişikliği
 
+Geliştirmeyi kolaylaştırmak ve ayrıca bağımlılıklarımızın 3.7 veya daha yüksek kullanıma izin verecek şekilde yükseltilmesine izin vermek için 3.5.3'ten düşük Python sürümleri için desteği kaldırmak zorunda kaldık. Böylece Python 3.4 sürümü için de verdiğimiz desteği kaldırmış bulunuyoruz.
+
 ### Başlıca Model Değişiklikleri
+v1.0'da gerçekleşen önemli model değişiklikleri aşağıdadır.
 
-#### Snowflakes Tam Sayı
+#### Snowflakes (İd Niteliği) Tam Sayı
+v1.0'dan önce Snowflakes / İd Niteliği ("the ```id``` attiributes")'ler diziydi (```strings```) Bu güncelleme ile ```int```'e (Tamsayı) çevrildiler.
+Kısa bir örnekle bunu görebiliriz.
+```
+# önce
+ch = client.get_channel('84319995256905728')
+if message.author.id == '80528701850124288':
+    ...
 
+# sonra
+ch = client.get_channel(84319995256905728)
+if message.author.id == 80528701850124288:
+    ...
+```
+Bu değişiklik kimliği kopyala özelliğini kullanırken daha az hataya neden olur çünkü artık bu tür ifadeleri tırnak içine almanız gerekmez. Aynı zamanda JSON yerine EFT'nin kullanılmasına izin vererek optimizasyon için daha uygun bir hale getirir.
 #### Sunucu Artık Guild
 
 #### Modeller Artık Durum Bilgili
