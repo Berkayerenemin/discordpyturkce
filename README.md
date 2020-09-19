@@ -119,7 +119,21 @@ if message.author.id == 80528701850124288:
 ```
 Bu değişiklik kimliği kopyala özelliğini kullanırken daha az hataya neden olur çünkü artık bu tür ifadeleri tırnak içine almanız gerekmez. Aynı zamanda JSON yerine EFT'nin kullanılmasına izin vererek optimizasyon için daha uygun bir hale getirir.
 #### Sunucu Artık Guild
-
+Resmi API "Server"i(Sunucuyu) "Guild"(Lonca) olarak tanımlar. API ile daha tutarlı olmak için modelin adı "Guild" olarak değiştirildi.
+Değişikliklerin listesi şu şekildedir:
+|Öncesi|Sonrası|
+|---|---|
+|Message.server|Message.guild|
+|Channel.server|Channel.guild|
+|Client.servers|Client.guild|
+|Client.get_server|Client.get_guild()|
+|Emoji.server|Emoji.guild|
+|Role.server|Role.guild|
+|Invite.server|Invite.guild|
+|Member.server|Member.guild|
+|Permissions.manage_server|Permissions.manage_guild|
+|VoiceClient.server|VoiceClient.guild|
+|Client.create_server|Client.create_guild()|
 #### Modeller Artık Durum Bilgili
 
 #### Nitelik Değişimleri
