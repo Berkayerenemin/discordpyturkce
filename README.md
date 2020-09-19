@@ -123,17 +123,17 @@ Resmi API "Server"i(Sunucuyu) "Guild"(Lonca) olarak tanımlar. API ile daha tuta
 Değişikliklerin listesi şu şekildedir:
 |Öncesi|Sonrası|
 |---|---|
-|Message.server|Message.guild|
-|Channel.server|Channel.guild|
-|Client.servers|Client.guild|
-|Client.get_server|Client.get_guild()|
-|Emoji.server|Emoji.guild|
-|Role.server|Role.guild|
-|Invite.server|Invite.guild|
-|Member.server|Member.guild|
-|Permissions.manage_server|Permissions.manage_guild|
-|VoiceClient.server|VoiceClient.guild|
-|Client.create_server|Client.create_guild()|
+|```Message.server```|[Message.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Message.guild)|
+|```Channel.server```|[GuildChannel.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.abc.GuildChannel.guild)|
+|```Client.servers```|[Client.guilds](https://discordpy.readthedocs.io/en/latest/api.html#discord.Client.guilds)|
+|```Client.get_server```|[Client.get_guild()](https://discordpy.readthedocs.io/en/latest/api.html#discord.Client.get_guild)|
+|```Emoji.server```|[Emoji.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Emoji.guild)|
+|```Role.server```|[Role.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Role.guild)|
+|```Invite.server```|[Invite.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Invite.guild)|
+|```Member.server```|[Member.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Member.guild)|
+|```Permissions.manage_server```|[Permissions.manage_guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.Permissions.manage_guild)|
+|```VoiceClient.server```|[VoiceClient.guild](https://discordpy.readthedocs.io/en/latest/api.html#discord.VoiceClient.guild)|
+|```Client.create_server```|[Client.create_guild()](https://discordpy.readthedocs.io/en/latest/api.html#discord.Client.create_guild)|
 #### Modeller Artık Durum Bilgili
 
 #### Nitelik Değişimleri
