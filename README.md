@@ -21,7 +21,7 @@ py -3 -m pip install -U discord.py
 
 Ses desteği için discord.py içinden discord.py[voice]’ı kullanmanız gereklidir.
 ```python
-py -3 -m pip install -U discord.py
+python3 -m pip install -U discord.py[voice]
 ```
 
 ### Basit Konseptler
@@ -39,7 +39,7 @@ class MyClient(discord.Client):
         print('Mesaj şundan geldi: {0.author}: {0.content}'.format(message))
 
 client = MyClient()
-client.run('my token goes here')
+client.run('token burada yer alır')
 ```
 
 ## Hızlı Başlangıç
@@ -63,7 +63,7 @@ async def on_message(message):
         return
 
     if message.content.startswith('$merhaba'):
-        await message.channel.send('Hello!')
+        await message.channel.send('Merhaba!')
 
 client.run('token burada yer alır')
 ```
@@ -119,8 +119,39 @@ if message.author.id == 80528701850124288:
 ```
 Bu değişiklik kimliği kopyala özelliğini kullanırken daha az hataya neden olur çünkü artık bu tür ifadeleri tırnak içine almanız gerekmez. Aynı zamanda JSON yerine EFT'nin kullanılmasına izin vererek optimizasyon için daha uygun bir hale getirir.
 #### Sunucu Artık Guild
+Resmi API dokümantasyonu "Sunucu (Server)" yerine "Lonca (Guild)" konseptini kullanır. API dokümantasyonu ile gerektiğinde daha tutarlı olması açısından model ```Guild``` olarak yeniden adlandırıldı ve buna atıfta bulunan tüm örnekler de değiştirlmiş oldu. 
+
+Değişikliklerin listesi aşağıdaki gibidir:
+| Öncesi | Sonrası  |
+| :---:   | :-: |
+| ```Message.server``` | 	```Message.guild``` |
+| ```Channel.server``` | 	```GuildChannel.guild``` |
+| ```Client.servers``` | 	```Client.guilds``` |
+| ```Client.get_server``` | 	```Client.get_guild()``` |
+| ```Emoji.server``` | ```Emoji.guild``` |
+| ```Role.server``` | ```Role.guild``` |
+| ```Invite.server``` | ```Invite.guild``` |
+| ```Member.server``` | ```Member.guild``` |
+| ```Permissions.manage_server``` | ```Permissions.manage_guild``` |
+| ```VoiceClient.server``` | 	```VoiceClient.guild``` |
+| ```Client.create_server``` | ```Client.create_guild()``` |
 
 #### Modeller Artık Durum Bilgili
+Daha önce de bahsettiğimiz gibi birçok özellik İstemci (Client) dışına taşındı ve ilgili modellerine yerleştirildi.
+
+Yapılan değişikliklerin bir listesini aşağıda bulabilirsiniz.
+| Öncesi | Sonrası  |
+| :---:   | :-: |
+| ```Client.add_reaction``` | 	```Message.add_reaction()``` |
+| ```Client.add_roles``` | 	```Member.add_roles()``` |
+| ```Client.ban``` | 	```	Member.ban() or Guild.ban()``` |
+| ```Client.change_nickname``` | 	```Member.edit()``` |
+| ```Client.clear_reactions``` | 	```	Message.clear_reactions()``` |
+| ```Client.create_channel``` | 	```Guild.create_text_channel() and Guild.create_voice_channel()``` |
+| ```Client.create_custom_emoji``` | 	```Guild.create_custom_emoji()``` |
+| ```Client.create_invite``` | 	```abc.GuildChannel.create_invite()``` |
+| ```Client.create_role``` | 	```Guild.create_role()``` |
+| ```Client.delete_channel``` | 	```abc.GuildChannel.delete()``` |
 
 #### Nitelik Değişimleri
 
