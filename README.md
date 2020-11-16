@@ -152,6 +152,19 @@ Yapılan değişikliklerin bir listesini aşağıda bulabilirsiniz.
 | ```Client.create_invite``` | 	```abc.GuildChannel.create_invite()``` |
 | ```Client.create_role``` | 	```Guild.create_role()``` |
 | ```Client.delete_channel``` | 	```abc.GuildChannel.delete()``` |
+| ```Client.delete_channel_permissions```|     ```abc.GuildChannel.set_permissions()``` |
+| ```Client.delete_custom_emoji```|     ```Emoji.delete()```|
+| ```Client.delete_invite```|    ```Invite.delete() veya Client.delete_invite()```|
+| ```Client.delete_message```|    ```Message.delete()```|
+| ```Client.delete_messages```|    ```TextChannel.delete_messages()```|
+| ```Client.delete_role```|    ```Role.delete()```|
+| ```Client.delete_server``` | 	```Guild.delete()``` |
+| ```Client.edit_channel``` | 	```TextChannel.edit() veya VoiceChannel.edit()``` |
+| ```Client.edit_channel_permissions``` | 	```abc.GuildChannel.set_permissions()``` |
+| ```Client.edit_custom_emoji``` | 	```Emoji.edit()``` |
+| ```Client.edit_message``` | 	```Message.edit()``` |
+| ```Client.edit_profile``` | 	```ClientUser.edit()``` |
+| ```Client.edit_role``` | 	```Role.edit()``` |
 
 #### Nitelik Değişimleri
 
