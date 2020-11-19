@@ -106,7 +106,7 @@ v1.0'da gerçekleşen önemli model değişiklikleri aşağıdadır.
 #### Snowflakes (İd Niteliği) Tam Sayı
 v1.0'dan önce Snowflakes / İd Niteliği ("the ```id``` attiributes")'ler diziydi (```strings```) Bu güncelleme ile ```int```'e (Tamsayı) çevrildiler.
 Kısa bir örnekle bunu görebiliriz.
-```
+```python
 # önce
 ch = client.get_channel('84319995256905728')
 if message.author.id == '80528701850124288':
@@ -165,13 +165,116 @@ Yapılan değişikliklerin bir listesini aşağıda bulabilirsiniz.
 | ```Client.edit_message``` | 	```Message.edit()``` |
 | ```Client.edit_profile``` | 	```ClientUser.edit()``` |
 | ```Client.edit_role``` | 	```Role.edit()``` |
+| ```Client.edit_server``` | 	```Guild.edit()``` |
+| ```Client.estimate_pruned_members``` | 	```Guild.estimate_pruned_members()``` |
+| ```Client.get_all_emojis``` | 	```Client.emojis``` |
+| ```Client.get_bans``` | 	```Guild.bans()``` |
+| ```Client.get_invite``` | 	```Client.fetch_invite()``` |
+| ```Client.get_message``` | 	```abc.Messageable.fetch_message()``` |
+| ```Client.get_reaction_users``` | 	```Reaction.users()``` |
+| ```Client.get_user_info``` | 	```Client.fetch_user()``` |
+| ```Client.invites_from``` | 	```abc.GuildChannel.invites() veya Guild.invites()``` |
+| ```Client.join_voice_channel``` | 	```VoiceChannel.connect()``` |
+| ```Client.kick``` | 	```Guild.kick() veya Member.kick()``` |
+| ```Client.leave_server``` | 	```Guild.leave()``` |
+| ```Client.logs_from``` | 	```abc.Messageable.history()``` |
+| ```Client.move_channel``` | 	```TextChannel.edit() veya VoiceChannel.edit()``` |
+| ```Client.move_member``` | 	```Member.edit()``` |
+| ```Client.move_role``` | 	```Role.edit()``` |
+| ```Client.pin_message``` | 	```Message.pin()``` |
+| ```Client.prune_members``` | 	```Guild.prune_members()``` |
+| ```Client.purge_from``` | 	```TextChannel.purge()``` |
+| ```Client.remove_reaction``` | 	```Message.remove_reaction()``` |
+| ```Client.remove_roles``` | 	```Message.remove_roles()``` |
+| ```Client.replace_roles``` | 	```Member.edit()``` |
+| ```Client.send_file``` | 	```abc.Messageable.send()``` |
+| ```Client.send_message``` | 	```abc.Messageable.send()``` |
+| ```Client.send_typing``` | 	```abc.Messageable.trigger_typing() veya abc.Messageable.typing()``` |
+| ```Client.server_voice_state``` | 	```Member.edit()``` |
+| ```Client.start_private_message``` | 	```User.crate_dm()``` |
+| ```Client.unban``` | 	```Guild.unban() veya Member.unban()``` |
+| ```Client.unpin message``` | 	```Message.unpin()``` |
+| ```Client.wait_for_message``` | 	```Client.wait_for()``` |
+| ```Client.wait_for_reaction``` | 	```Client.wait_for()``` |
+| ```Client.wait_until_login``` | 	```Kaldırıldı``` |
+| ```Client.wait_until_ready``` | 	```Değiştirilmedi``` |
 
 #### Nitelik Değişimleri
+Biraz daha tutarlı olması açısından, özellik saydığımız bazı şeyleri yöntemlerle değiştirdik. 
+Aşağıda özellik yerine kullanılan yöntemleri görüyorsunuz. (parantez gerektirir)
+
+* Role.is_default()
+* Client.is_ready()
+* Client.is_closed()
+
+#### Sözlük Değeri Değişimleri
+Versiyon 1.0'dan önce, modellerin yerini alan bazı toplama özellikleri ```dict view``` nesneleri döndürüyordu.
+Sonuç olarak, siz üzerinde yenileme işlemi yaptığınızda sözlüğün boyutu değiştiğinden dolayı bir RuntimeError hatası alıyordunuz. Bu olayı kısmen gidermek için ```dict view``` nesneleri listelere dönüştürüldü.
+
+Aşağıda listeye çevirilen özellikler bulunmaktadır.
+
+* Client.guilds
+* Client.users
+* Client.emojis
+* Guild.channels
+* Guild.text_channels
+* Guild.voice_channels
+* Guild.emojis
+* Guild.members
 
 #### Ses Durumu Değişiklikleri
+Daha önce versiyon 0.11.0'da, ses durumlarına başvurmak için bir Momber.voice özniteliğile birlikte bir VoiceState sınıfı eklenmişti. Ancak kullanıcı için şeffaftı. Kitaplığın bellekten daha fazla tasarruf etmesini sağlamak amacıyla, ses durumu değişikliği artık daha görünür.
+
+Ses özelliklerine erişmenin tek yolu Member.voice özelliğidir. Üyenin ses durumu yoksa bu özniteliğin yok olabileceğini unutmayın. 
+
+Hızlı bir örnek yapalım;
+```python
+# önce
+member.deaf
+member.voice.voice_channel
+
+# sonra
+if member.voice:
+    member.voice.deaf
+    member.voice.channel
+```
 
 #### Kullanıcı ve Üye Türü Ayrımı
 
 #### Kanal Tipi Bölme
 
 #### Çeşitli Model Değişiklikleri
+
+## Mesaj Gönderimi
+Yapılan değişikliklerden biri, önceki ```Client.send_message``` ve ```Client.send_file``` işlevlerinin ```send()``` adı verilen tek bir yöntemde birleştirilmediydi.
+
+Basitçe örnek verecek olursak;
+```python 
+# önce
+await client.send_message(channel, "Hello")
+
+# sonra
+await client.send("Hello")
+```
+Tabiki bu yeni yöntem, eski ```send_message``` işlevlerinin desteklediği her şeyi destekler. Örneğin gömme mesajlar (Embed'ler)
+```python
+e = discord.Embed(title="foo")
+await channel.send("Hello", embed=e)
+```
+Dosya göndermek ile iligil küçük bir uyarımız var, ancak bu işlevsellik birden fazla dosya ekini desteklemek için genişletildiğinden, artık tek bir dosya yüklemek için sözde adlandırılmış dosya çiftini kullanmanız gerekir.
+```python
+# önce 
+await client.send_file(channel, "cool.png", filename="testing.png", content="Hello")
+
+# sonra
+await channel.send("Hello", file=discord.File("cool.png", "testing.png"))
+```
+Bu değişiklik birden çok dosya yüklemesini kolaylaştırmak içindi.
+```python
+my_files = [
+    discord.File('cool.png', 'testing.png'),
+    discord.File(some_fp, 'cool_filename.png'),
+]
+
+await channel.send('Resimleriniz:', files=my_files)
+```
